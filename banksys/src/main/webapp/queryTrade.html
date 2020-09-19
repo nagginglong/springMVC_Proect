@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>table模块快速使用</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+</head>
+<body>
+<div id="content">
+
+    <div class="layui-form-item searchDiv">
+
+        <div class="layui-inline">
+            <label class="layui-form-label">开始时间</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">结束时间</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="test2" placeholder="yyyy-MM-dd">
+            </div>
+        </div>
+
+        <button class="layui-btn" id="btn" data-type="reload">搜索</button>
+
+    </div>
+
+    <table class="layui-hide" id="test" lay-filter="transferTable"></table>
+</div>
+<script type="text/javascript" src="layui/layui.js"></script>
+<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+<script>
+    layui.use(['table', "laypage", "layer", "laydate", "element"], function(){
+
+        //初始化table组件
+            var table = layui.table
+                ,laypage = layui.laypage
+                ,laydate = layui.laydate
+                ,layer = layui.layer,
+                element = layui.element;
+            //常规用法
+            laydate.render({
+                elem: '#test1'
+            });
+            //常规用法
+            laydate.render({
+                elem: '#test2'
+            });
+
+        //第一个实例
+        table.render({
+            elem: '#test'
+            ,id:"transferTable"
+            ,url: 'trade.do' //数据接口
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {field: 'tid', title: '序号', width:150, sort: true, fixed: 'left'}
+                ,{field: 'createTime', title: '创建时间', width:260,sort: true}
+                ,{field: 'pay', title: '支出', width:150, sort: true}
+                ,{field: 'income', title: '收入', width:150}
+                ,{field: 'consumType', title: '交易类型', width: 150}
+                ,{field: 'balance', title: '余额', width: 150, }
+                ,{field: 'comment', title: '备注', width: 150, }
+            ]]
+        });
+
+
+        //用的还是table的请求路径
+        var $ = layui.$, active = {
+            reload :function () {
+            //执行重载
+                table.reload('transferTable',{
+                    page:{
+                        //重载从第一页开始
+                        curr:1
+                    },
+                    where:{
+                        beginTime:$("#test1").val(),
+                        endTime:$("#test2").val(),
+                    }
+                });
+            }
+        };
+
+        //layui百度搜数据表格的重载
+        $('.searchDiv .layui-btn ').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        })
+    })
+
+
+
+
+    //     $('.layui-btn').on('click', function () {
+    //         // 搜索条件
+    //         var send_name = $('#test1').val();
+    //         var send_data = $('#test2').val();
+    //         table.reload('transferTable', {
+    //             method: 'post'
+    //             , where: {
+    //                 'token': token,
+    //                 'send_name': send_name,
+    //                 'send_data': send_data,
+    //             }
+    //             , page: {
+    //                 curr: 1
+    //             }
+    //         });
+    //     });
+    //
+    // });
+</script>
+</body>
+</html>

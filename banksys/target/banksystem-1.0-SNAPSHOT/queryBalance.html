@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+</head>
+<body>
+<div class="layui-card" style="margin-top: 50px;margin-left:200px;width:500px">
+    <div class="layui-card-header" align="center">账户余额</div>
+    <div class="layui-card-body">
+        人民币：<span style="float: right" id="balance"></span>&nbsp;
+    </div>
+</div>
+<script>
+    layui.use([ "layer", "element"], function(){
+        var element = layui.element,
+            layer = layui.layer;
+
+        $.ajax({
+            type:"get",
+            url:"queryBalance.do",
+            dataType:"json",
+            success:function (data) {
+                if(data.status == 1){
+                    console.log(data)
+                    $("#balance").html(data.info);
+                }
+            }
+        })
+
+
+    });
+
+</script>
+</body>
+</html>

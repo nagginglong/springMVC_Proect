@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>upload模块快速使用</title>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+</head>
+<body>
+
+<button type="button" class="layui-btn" id="test1">
+    <i class="layui-icon">&#xe67c;</i>上传图片
+</button>
+
+<script type="text/javascript" src="layui/layui.js"></script>
+<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+<script>
+    layui.use('upload', function(){
+        var upload = layui.upload;
+
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#test1' //绑定元素
+            ,url: 'upportarit.do' //上传接口
+            ,exts: 'jpg|png|gif'  // 支持的格式
+            ,size:'10240'
+            ,accept:"file"
+            ,done: function(res){
+                alert("1111111")
+                if(res.code == 1){
+                    window.parent.updateHead()
+                    return layer.msg("上传成功!")
+                } else {
+
+                }return layer.msg("上传失败!")
+
+                //上传完毕回调
+            }
+            ,error: function(){
+                alert("000000000")
+            }
+        });
+    });
+</script>
+</body>
+</html>

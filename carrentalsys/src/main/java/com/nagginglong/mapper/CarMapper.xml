@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.nagginglong.dao.CarDao">
+
+    <select id="selectCar" parameterType="int" resultType="com.nagginglong.entity.Car">
+
+        SELECT id,`name`,`type`,sitnum,cid,price,`number`,picture FROM sys_car where cid = #{cid}
+
+    </select>
+
+    <select id="selectOneCar" parameterType="int" resultType="com.nagginglong.entity.Car">
+        SELECT id,`name`,`type`,sitnum,cid,price,`number`,picture FROM sys_car where id = #{id}
+    </select>
+
+    <update id="updateCar" parameterType="int">
+        update sys_car set `number` = `number` - 1 where id = #{id}
+    </update>
+
+</mapper>

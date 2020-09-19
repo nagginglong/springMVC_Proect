@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>转账业务</title>
+    <script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+</head>
+<body>
+    <center>
+        <form>
+            <br>
+            <br>
+            转账账户:<input type="text" name="uname"><br>
+            <br>
+            转账金额:<input type="text" name="money"><br>
+            <br>
+            <input type="submit" value="确定">
+        </form>
+    </center>
+
+<script>
+    $("form").submit(function () {
+        alert("发起了AJAX请求")
+        $.ajax({
+            type:"post",
+            url:"http://localhost:8080/banksys/transfer.do",
+            data:$("form").serialize(),
+            dataType:"json",
+            success:function (data) {
+                console.log(data)
+                if (data.status == 1) {
+                    alert(data.info)
+                }
+
+            }
+        })
+        return false;
+    })
+</script>
+</body>
+</html>
